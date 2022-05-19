@@ -2,16 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Statuses
-{
-    BallOStart,
-    BallInField,
-}
-
 public class Ball : MonoBehaviour
 {
-    private Statuses statuse;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +12,6 @@ public class Ball : MonoBehaviour
 
     void Awake()
     {
-        statuse = Statuses.BallOStart;
     }
 
     public void Move()

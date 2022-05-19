@@ -1,12 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Bubble : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private AudioClip _clip;
+    private AudioSource audiosource;
+
+    
+
+    [SerializeField] private readonly int price = 10;
+
+    void Awake()
     {
+        audiosource = GetComponent<AudioSource>();
+        audiosource.clip = _clip;
+
         
     }
 
@@ -20,7 +31,14 @@ public class Bubble : MonoBehaviour
     {
         if (collision.collider.gameObject.tag == "Projectile")
         {
+            AudioSource.PlayClipAtPoint(_clip, Camera.main.transform.position, 1f);
             Destroy(gameObject);
+            GameManager.instance.AddPointsToPlayer(price);
         }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        audiosource.Stop();
     }
 }

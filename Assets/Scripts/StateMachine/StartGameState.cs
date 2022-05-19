@@ -21,6 +21,8 @@ internal class StartGameState : State
             case PlayerStatuses.PlayerLose:
                 stateMachine.State = new FinishGameState();
                 break;
+            default:
+                break;
         }
     }
 }

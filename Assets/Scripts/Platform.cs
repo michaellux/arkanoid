@@ -8,7 +8,7 @@ public class Platform : MonoBehaviour
     private AudioClip _clip;
     private AudioSource audiosource;
 
-    private float _speed = 20;
+    private readonly float _speed = 20;
 
     void Start()
     {

@@ -26,7 +26,7 @@ public class Bubble : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnCollisionExit2D()
     {
         audiosource.Stop();
     }

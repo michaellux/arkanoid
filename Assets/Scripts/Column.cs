@@ -14,12 +14,12 @@ public class Column : MonoBehaviour
         audiosource.clip = _clip;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D()
     {
         AudioSource.PlayClipAtPoint(_clip, Camera.main.transform.position, 1f);
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnCollisionExit2D()
     {
         audiosource.Stop();
     }

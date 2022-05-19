@@ -19,6 +19,8 @@ internal class FinishGameState : State
             case PlayerStatuses.PlayerInGame:
                 stateMachine.State = new StartGameState();
                 break;
+            default:
+                break;
         }
     }
 }

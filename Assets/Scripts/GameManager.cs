@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,13 +10,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera gameCamera;
     [SerializeField] private static AudioSource foregroundMusic;
 
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private GameObject ballPrefab;
+    [SerializeField] private GameObject platformPrefab;
+    [SerializeField] private GameObject bubbleFieldPrefab;
+    private GameObject ballOnScene;
+    private GameObject platformOnScene;
+    private GameObject bubbleFieldOnScene;
+
     private UnityEvent addPointsToPlayer;
     private UnityEvent noMoreGoals;
 
     public StateMachine StateMachine { get; set; }
 
     public static GameManager instance = null;
-
+    
     void Awake()
     {
         #region Singleton
@@ -50,10 +59,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void InitPlayer()
     {
-        
+        SetPlayerStatus(PlayerStatuses.PlayerInGame);
+    }
+
+    public void InitPlayField()
+    {
+        SetBubbleFieldOnScene();
+        SetBallOnPlayField();
+        SetPlatformOnPlayField();
+    }
+
+    public void SetBubbleFieldOnScene()
+    {
+        bubbleFieldOnScene = Instantiate(bubbleFieldPrefab);
+    }
+    public void SetBallOnPlayField()
+    {
+        ballOnScene = Instantiate(ballPrefab, playerTransform);
+    }
+
+    public void SetPlatformOnPlayField()
+    {
+        platformOnScene = Instantiate(platformPrefab, playerTransform);
     }
 
     public void AddPointsToPlayer(int priceOfCoin)
@@ -63,28 +92,54 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator AddPoints()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(2f);
-            addPointsToPlayer.Invoke();
-        }
+        yield return new WaitForSeconds(2f);
+        Debug.Log("AddPoints");
+        addPointsToPlayer.Invoke();
     }
 
     public void CheckLeftGoals()
     {
-        GameObject[] leftGoals = GameObject.FindGameObjectsWithTag("Goal");
-
-        if (leftGoals.Length == 0)
+        if (player.GetStatus() == PlayerStatuses.PlayerInGame)
         {
-            SetPlayerStatus(PlayerStatuses.PlayerWin);
+            GameObject[] leftGoals = GameObject.FindGameObjectsWithTag("Goal");
+
+            if (leftGoals.Length == 0)
+            {
+                SetPlayerStatus(PlayerStatuses.PlayerWin);
+            }
         }
     }
 
     public void SetPlayerStatus(PlayerStatuses statusForAssign)
     {
-        if (player.GetStatus() == PlayerStatuses.PlayerInGame)
-        {
-            player.SetStatus(statusForAssign);
-        }
+        player.SetStatus(statusForAssign);
+    }
+
+    public void UpdateState()
+    {
+        StateMachine.FindOut(player.GetStatus());
+    }
+
+    public void RestartGame()
+    {
+        SetPlayerStatus(PlayerStatuses.PlayerInGame);
+    }
+
+    public void ResetAll()
+    {
+        ClearField();
+        ResetPlayerScore();
+    }
+
+    public void ClearField()
+    {
+        Destroy(ballOnScene);
+        Destroy(platformOnScene);
+        Destroy(bubbleFieldOnScene);
+    }
+
+    public void ResetPlayerScore()
+    {
+        player.ResetScore();
     }
 }

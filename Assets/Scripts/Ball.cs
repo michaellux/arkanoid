@@ -9,14 +9,4 @@ public class Ball : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(2f, 8f), Random.Range(2f, 8f));
     }
-
-    void Awake()
-    {
-    }
-
-    public void Move()
-    {
-       
-       
-    }
 }

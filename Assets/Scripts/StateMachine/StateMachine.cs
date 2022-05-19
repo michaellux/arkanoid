@@ -10,10 +10,10 @@ public class StateMachine
 
     public StateMachine()
     {
-        State = new BallInFieldState();
+        State = new StartGameState();
     }
 
-    public void FindOut(Events eventItem)
+    public void FindOut(PlayerStatuses eventItem)
     {
         State.HandleButton(this, eventItem);
     }

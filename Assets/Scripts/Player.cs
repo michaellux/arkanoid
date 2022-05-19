@@ -12,13 +12,15 @@ public enum PlayerStatuses
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int totalScore = 0;
+    private readonly int startScoreValue = 0;
+    [SerializeField] private int totalScore;
     [SerializeField] private PlayerStatuses currentStatus = PlayerStatuses.PlayerInGame;
 
-    private UnityEvent addedPoints;
+    private UnityEvent changedPoints;
     private UnityEvent changedStatus;
 
     public static Player instance = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,30 +36,33 @@ public class Player : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         #endregion
 
-        if (addedPoints == null)
+        if (changedPoints == null)
         {
-            addedPoints = new UnityEvent();
-            addedPoints.AddListener(UIManager.instance.UpdateScoreUI);
+            changedPoints = new UnityEvent();
+            changedPoints.AddListener(UIManager.instance.UpdateScoreUI);
         }
 
         if (changedStatus == null)
         {
             changedStatus = new UnityEvent();
-            changedStatus.AddListener(UIManager.instance.UpdateStatus);
-            changedStatus.AddListener(UIManager.instance.ShowFinishPanel);
+            changedStatus.AddListener(UIManager.instance.UpdateStatusUI);
+            changedStatus.AddListener(GameManager.instance.UpdateState);
         }
+
+        totalScore = startScoreValue;
+        changedPoints.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ResetScore()
     {
-        
+        totalScore = startScoreValue;
+        changedPoints.Invoke();
     }
 
     public void AddScore(int points)
     {
         totalScore += points;
-        addedPoints.Invoke();
+        changedPoints.Invoke();
     }
 
     public int GetTotalScore()

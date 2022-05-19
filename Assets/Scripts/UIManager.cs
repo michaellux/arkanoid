@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -32,7 +33,12 @@ public class UIManager : MonoBehaviour
 
     public void ShowFinishPanel()
     {
+        finishPanel.gameObject.SetActive(true);
         finishPanel.Play("ShowResultPanel");
+    }
+    public void HideFinishPanel()
+    {
+        finishPanel.gameObject.SetActive(false);
     }
 
     public void UpdateScoreUI()
@@ -40,7 +46,7 @@ public class UIManager : MonoBehaviour
         totalScoreUI.text = $"{Player.instance.GetTotalScore()}";
     }
 
-    public void UpdateStatus()
+    public void UpdateStatusUI()
     {
         PlayerStatuses currentPlayerStatus = Player.instance.GetStatus();
         switch (currentPlayerStatus)
@@ -54,5 +60,11 @@ public class UIManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void RestartGameHandler()
+    {
+        HideFinishPanel();
+        GameManager.instance.RestartGame();
     }
 }

@@ -5,11 +5,8 @@ using UnityEngine.Events;
 
 public class Bubble : MonoBehaviour
 {
-    [SerializeField]
-    private AudioClip _clip;
-    private AudioSource audiosource;
-
-    
+    [SerializeField] private AudioClip _clip;
+    [SerializeField] private AudioSource audiosource;
 
     [SerializeField] private readonly int price = 10;
 
@@ -17,14 +14,6 @@ public class Bubble : MonoBehaviour
     {
         audiosource = GetComponent<AudioSource>();
         audiosource.clip = _clip;
-
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void OnCollisionEnter2D(Collision2D collision)

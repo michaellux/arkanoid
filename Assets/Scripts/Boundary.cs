@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class Boundary : MonoBehaviour
 {
-    public static Boundary instance = null;
-
-    public static bool ballInBoundary = true;
+    private static Boundary instance = null;
 
     private void Awake()
     {

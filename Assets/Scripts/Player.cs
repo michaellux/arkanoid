@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private UnityEvent changedPoints;
     private UnityEvent changedStatus;
 
-    public static Player instance = null;
+    public static Player instance;
 
     // Start is called before the first frame update
     void Start()

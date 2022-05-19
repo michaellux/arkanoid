@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public StateMachine StateMachine { get; set; }
 
-    public static GameManager instance = null;
+    public static GameManager instance;
     
     void Awake()
     {

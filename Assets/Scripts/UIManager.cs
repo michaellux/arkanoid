@@ -15,8 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI totalScoreUI;
     [SerializeField] private TextMeshProUGUI finishPlayerResult;
 
-    public static UIManager instance = null;
-    void Start()
+    public static UIManager instance;
+    void Awake()
     {
         #region Singleton
         if (instance == null)
